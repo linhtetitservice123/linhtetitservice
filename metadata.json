@@ -1,0 +1,6 @@
+{
+  "name": "Lin Htet IT Service - Digital Store",
+  "description": "Lin Htet IT Service - ဒစ်ဂျစ်တယ်ပစ္စည်းများနှင့် Software ဝန်ဆောင်မှုများ အဆင်ပြေလွယ်ကူစွာ ဝယ်ယူနိုင်သော ပလက်ဖောင်း",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

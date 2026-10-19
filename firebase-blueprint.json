@@ -1,0 +1,79 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "Digital product or license sold on Lin Htet IT Service",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "titleMm": { "type": "string" },
+        "category": { "type": "string" },
+        "price": { "type": "number" },
+        "priceUsd": { "type": "number" },
+        "badge": { "type": "string" },
+        "image": { "type": "string" },
+        "description": { "type": "string" },
+        "deliveryType": { "type": "string" },
+        "stockStatus": { "type": "string" },
+        "availableKeys": { "type": "array" },
+        "features": { "type": "array" },
+        "instructions": { "type": "string" }
+      },
+      "required": ["id", "title", "price", "deliveryType", "stockStatus"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer purchase order for digital products",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "customerTelegram": { "type": "string" },
+        "customerWhatsapp": { "type": "string" },
+        "customerNote": { "type": "string" },
+        "items": { "type": "array" },
+        "totalAmount": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "paymentRef": { "type": "string" },
+        "paymentSlipUrl": { "type": "string" },
+        "status": { "type": "string" },
+        "deliveredKeys": { "type": "array" },
+        "adminNote": { "type": "string" }
+      },
+      "required": ["id", "createdAt", "customerPhone", "items", "totalAmount", "status"]
+    },
+    "Settings": {
+      "title": "Settings",
+      "description": "Store configuration and notification credentials",
+      "type": "object",
+      "properties": {
+        "shopName": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "telegramUsername": { "type": "string" },
+        "telegramBotToken": { "type": "string" },
+        "telegramChatId": { "type": "string" },
+        "whatsappNumber": { "type": "string" },
+        "paymentAccounts": { "type": "array" }
+      }
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Collection of digital products"
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Customer orders with fulfillment details"
+    },
+    "/settings/config": {
+      "schema": { "$ref": "#/entities/Settings" },
+      "description": "Global store settings and credentials"
+    }
+  }
+}
