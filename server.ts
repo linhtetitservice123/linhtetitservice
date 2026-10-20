@@ -1,5 +1,4 @@
 import express, { Request, Response } from 'express';
-import { createServer as createViteServer } from 'vite';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
@@ -13,9 +12,37 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Data file path
-const DATA_DIR = path.join(__dirname, 'data');
+// CORS & Preflight handling for Vercel & cross-origin clients
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
+// Normalize request URL for Vercel serverless rewrites
+app.use((req, res, next) => {
+  const matched = (req.headers['x-matched-path'] as string) || (req.headers['x-forwarded-url'] as string);
+  if (matched && matched.startsWith('/api') && !req.url.startsWith('/api')) {
+    req.url = matched;
+  } else if (!req.url.startsWith('/api')) {
+    // If Vercel stripped /api prefix, prepend it so Express /api/* routes match
+    const apiPrefixes = ['/products', '/orders', '/settings', '/admin', '/notify', '/reviews', '/categories', '/stats'];
+    if (apiPrefixes.some(p => req.url === p || req.url.startsWith(p + '/') || req.url.startsWith(p + '?'))) {
+      req.url = '/api' + req.url;
+    }
+  }
+  next();
+});
+
+// Data file path (support Vercel serverless /tmp writable directory)
+const isVercel = process.env.VERCEL === '1' || Boolean(process.env.VERCEL);
+const DATA_DIR = isVercel ? '/tmp' : path.join(__dirname, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'store_data.json');
+const SEED_DATA_FILE = path.join(__dirname, 'data', 'store_data.json');
 
 // Initial seed data
 const initialData = {
@@ -430,8 +457,17 @@ function getStore() {
       fs.mkdirSync(DATA_DIR, { recursive: true });
     }
     if (!fs.existsSync(DATA_FILE)) {
-      fs.writeFileSync(DATA_FILE, JSON.stringify(initialData, null, 2), 'utf8');
-      return initialData;
+      let seed = initialData;
+      if (fs.existsSync(SEED_DATA_FILE)) {
+        try {
+          const rawSeed = fs.readFileSync(SEED_DATA_FILE, 'utf8');
+          seed = JSON.parse(rawSeed);
+        } catch {
+          seed = initialData;
+        }
+      }
+      fs.writeFileSync(DATA_FILE, JSON.stringify(seed, null, 2), 'utf8');
+      return seed;
     }
     const raw = fs.readFileSync(DATA_FILE, 'utf8');
     const parsed = JSON.parse(raw);
@@ -1053,6 +1089,7 @@ async function startServer() {
       res.sendFile(path.join(__dirname, 'dist', 'index.html'));
     });
   } else {
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
@@ -1065,4 +1102,8 @@ async function startServer() {
   });
 }
 
-startServer();
+export default app;
+
+if (!process.env.VERCEL) {
+  startServer();
+}

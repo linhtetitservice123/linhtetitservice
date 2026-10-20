@@ -204,11 +204,11 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Admin Login Button */}
           <button
             onClick={onOpenAdmin}
-            className="p-2 sm:px-3 sm:py-2 rounded-xl bg-white hover:bg-[#FAF8F5] text-[#5C3618] border border-[#D5C2B1] transition flex items-center gap-1.5 text-xs font-semibold cursor-pointer shadow-xs"
-            title="Admin Backend Dashboard"
+            className="px-2.5 py-2 rounded-xl bg-white hover:bg-[#FAF8F5] text-[#5C3618] border border-[#D5C2B1] transition flex items-center gap-1.5 text-xs font-bold cursor-pointer shadow-xs active:scale-95"
+            title="Admin Backend Dashboard (/admin)"
           >
-            <Lock className="w-4 h-4 text-[#8B5A2B]" />
-            <span className="hidden sm:inline">Admin</span>
+            <Lock className="w-3.5 h-3.5 text-[#8B5A2B]" />
+            <span>Admin</span>
           </button>
 
           {/* Mobile menu hamburger */}

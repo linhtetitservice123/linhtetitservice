@@ -26,16 +26,17 @@ import { AdminPanel } from './components/AdminPanel';
 import { Footer } from './components/Footer';
 import { DeviceFrameWrapper } from './components/DeviceFrameWrapper';
 import { Reviews } from './components/Reviews';
+import { getLocalProducts, getLocalSettings, getLocalCategories, saveLocalProducts, saveLocalSettings } from './lib/storeService';
 import './lib/firebase';
 
 export default function App() {
   // App Core State
   const [lang, setLang] = useState<Language>('my');
   const [format, setFormat] = useState<DeviceFormat>('desktop');
-  const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [settings, setSettings] = useState<StoreSettings | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState<Product[]>(() => getLocalProducts());
+  const [categories, setCategories] = useState<Category[]>(() => getLocalCategories());
+  const [settings, setSettings] = useState<StoreSettings>(() => getLocalSettings());
+  const [loading, setLoading] = useState(false);
 
   // Filters & Search
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -58,7 +59,57 @@ export default function App() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isTrackerOpen, setIsTrackerOpen] = useState(false);
   const [trackerInitialId, setTrackerInitialId] = useState('');
-  const [isAdminOpen, setIsAdminOpen] = useState(false);
+  
+  // Admin Panel Open State (Support /admin URL path, #admin hash, or ?admin=true query)
+  const [isAdminOpen, setIsAdminOpen] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const p = window.location.pathname.toLowerCase();
+      const h = window.location.hash.toLowerCase();
+      const q = new URLSearchParams(window.location.search);
+      return p === '/admin' || p.startsWith('/admin/') || h === '#admin' || q.get('admin') === 'true';
+    }
+    return false;
+  });
+
+  // URL synchronization for /admin routing on Vercel
+  useEffect(() => {
+    const handleUrlChange = () => {
+      const p = window.location.pathname.toLowerCase();
+      const h = window.location.hash.toLowerCase();
+      const q = new URLSearchParams(window.location.search);
+      const shouldOpenAdmin = p === '/admin' || p.startsWith('/admin/') || h === '#admin' || q.get('admin') === 'true';
+      setIsAdminOpen(shouldOpenAdmin);
+    };
+
+    window.addEventListener('popstate', handleUrlChange);
+    window.addEventListener('hashchange', handleUrlChange);
+    return () => {
+      window.removeEventListener('popstate', handleUrlChange);
+      window.removeEventListener('hashchange', handleUrlChange);
+    };
+  }, []);
+
+  const openAdmin = () => {
+    setIsAdminOpen(true);
+    try {
+      if (window.location.pathname !== '/admin') {
+        window.history.pushState({ page: 'admin' }, '', '/admin');
+      }
+    } catch {
+      window.location.hash = '#admin';
+    }
+  };
+
+  const closeAdmin = () => {
+    setIsAdminOpen(false);
+    try {
+      if (window.location.pathname === '/admin') {
+        window.history.pushState({}, '', '/');
+      }
+    } catch {
+      window.location.hash = '';
+    }
+  };
 
   // Toast / Banner alert
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -74,25 +125,68 @@ export default function App() {
     }
   }, [cart]);
 
-  // Initial Fetch Data
+  // Initial Fetch Data with resilient fallback for Vercel & offline deployments
   const fetchData = async () => {
     try {
       setLoading(true);
-      const [prodRes, catRes, setRes] = await Promise.all([
-        fetch('/api/products'),
-        fetch('/api/categories'),
-        fetch('/api/settings')
-      ]);
+      let loadedProducts: Product[] | null = null;
+      let loadedCategories: Category[] | null = null;
+      let loadedSettings: StoreSettings | null = null;
 
-      const prodData = await prodRes.json();
-      const catData = await catRes.json();
-      const setData = await setRes.json();
+      try {
+        const [prodRes, catRes, setRes] = await Promise.all([
+          fetch('/api/products'),
+          fetch('/api/categories'),
+          fetch('/api/settings')
+        ]);
 
-      if (prodData.success) setProducts(prodData.products || []);
-      if (catData.success) setCategories(catData.categories || []);
-      if (setData.success) setSettings(setData.settings || null);
+        if (prodRes.ok) {
+          const ct = prodRes.headers.get('content-type') || '';
+          if (ct.includes('application/json')) {
+            const prodData = await prodRes.json();
+            if (prodData.success && Array.isArray(prodData.products)) {
+              loadedProducts = prodData.products;
+              if (loadedProducts) {
+                saveLocalProducts(loadedProducts);
+              }
+            }
+          }
+        }
+
+        if (catRes.ok) {
+          const ct = catRes.headers.get('content-type') || '';
+          if (ct.includes('application/json')) {
+            const catData = await catRes.json();
+            if (catData.success && Array.isArray(catData.categories)) {
+              loadedCategories = catData.categories;
+            }
+          }
+        }
+
+        if (setRes.ok) {
+          const ct = setRes.headers.get('content-type') || '';
+          if (ct.includes('application/json')) {
+            const setData = await setRes.json();
+            if (setData.success && setData.settings) {
+              loadedSettings = setData.settings;
+              if (loadedSettings) {
+                saveLocalSettings(loadedSettings);
+              }
+            }
+          }
+        }
+      } catch (networkErr) {
+        console.warn('API route not reached, activating local store fallback:', networkErr);
+      }
+
+      setProducts(loadedProducts || getLocalProducts());
+      setCategories(loadedCategories || getLocalCategories());
+      setSettings(loadedSettings || getLocalSettings());
     } catch (err) {
       console.error('Failed to load store data:', err);
+      setProducts(getLocalProducts());
+      setCategories(getLocalCategories());
+      setSettings(getLocalSettings());
     } finally {
       setLoading(false);
     }
@@ -199,7 +293,7 @@ export default function App() {
         cartCount={cartTotalCount}
         onOpenCart={() => setIsCartOpen(true)}
         onOpenTracker={() => setIsTrackerOpen(true)}
-        onOpenAdmin={() => setIsAdminOpen(true)}
+        onOpenAdmin={openAdmin}
         settings={settings}
       />
 
@@ -358,7 +452,7 @@ export default function App() {
         settings={settings}
         lang={lang}
         onOpenTracker={() => setIsTrackerOpen(true)}
-        onOpenAdmin={() => setIsAdminOpen(true)}
+        onOpenAdmin={openAdmin}
       />
 
       {/* Product Detail Modal */}
@@ -411,10 +505,10 @@ export default function App() {
       )}
 
       {/* Admin Panel Backend */}
-      {isAdminOpen && settings && (
+      {isAdminOpen && (
         <AdminPanel
           isOpen={isAdminOpen}
-          onClose={() => setIsAdminOpen(false)}
+          onClose={closeAdmin}
           lang={lang}
           settings={settings}
           onUpdateSettings={(newSettings) => setSettings(newSettings)}

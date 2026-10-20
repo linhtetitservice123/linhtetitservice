@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { CartItem, Language, StoreSettings, Order } from '../types';
 import { translations } from '../translations';
+import { addLocalOrder, directTelegramNotification } from '../lib/storeService';
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -127,33 +128,90 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         paymentSlipUrl: paymentSlipUrl.trim()
       };
 
-      const res = await fetch('/api/orders', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
+      let orderResult: Order | null = null;
+      let returnedWaUrl = '';
+      let returnedTgUrl = '';
+      let returnedTgNotify = null;
 
-      const data = await res.json();
-
-      if (data.success && data.order) {
-        setCompletedOrder(data.order);
-        setWhatsappUrl(data.whatsappUrl || '');
-        setTelegramAdminUrl(data.telegramAdminUrl || '');
-        setTelegramNotifyResult(data.telegramResult);
-        onOrderSuccess(data.order);
-
-        // Confetti celebration
-        try {
-          confetti({
-            particleCount: 80,
-            spread: 70,
-            origin: { y: 0.6 }
-          });
-        } catch (e) {
-          // ignore
+      try {
+        const res = await fetch('/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const ct = res.headers.get('content-type') || '';
+        if (res.ok && ct.includes('application/json')) {
+          const data = await res.json();
+          if (data.success && data.order) {
+            orderResult = data.order;
+            returnedWaUrl = data.whatsappUrl || '';
+            returnedTgUrl = data.telegramAdminUrl || '';
+            returnedTgNotify = data.telegramResult;
+          }
         }
-      } else {
-        setError(data.message || 'Failed to place order');
+      } catch (apiErr) {
+        console.warn('Orders API not reached (e.g. Vercel static), creating order locally:', apiErr);
+      }
+
+      // If API didn't return an order (e.g. Vercel static deployment), generate and save locally:
+      if (!orderResult) {
+        const orderNumber = Math.floor(10000 + Math.random() * 90000);
+        orderResult = {
+          id: `LH-${orderNumber}`,
+          createdAt: new Date().toISOString(),
+          customerName: payload.customerName,
+          customerPhone: payload.customerPhone,
+          customerEmail: payload.customerEmail,
+          customerTelegram: payload.customerTelegram,
+          customerWhatsapp: payload.customerWhatsapp,
+          customerNote: payload.customerNote,
+          items: payload.items,
+          totalAmount: payload.totalAmount,
+          paymentMethod: payload.paymentMethod,
+          paymentRef: payload.paymentRef,
+          paymentSlipUrl: payload.paymentSlipUrl,
+          status: 'pending',
+          deliveredKeys: []
+        };
+
+        const waText = encodeURIComponent(
+          `🛒 *Lin Htet IT Service Order Confirmation*\n` +
+          `Order ID: #${orderResult.id}\n` +
+          `Customer: ${orderResult.customerName} (${orderResult.customerPhone})\n` +
+          `Total: ${Number(orderResult.totalAmount).toLocaleString()} MMK\n` +
+          `Payment: ${orderResult.paymentMethod} (Ref: ${orderResult.paymentRef || 'Submitted'})\n` +
+          `Please verify and fulfill my digital product. Thank you!`
+        );
+        const waPhone = settings?.whatsappNumber ? settings.whatsappNumber.replace(/[^0-9]/g, '') : '';
+        returnedWaUrl = `https://wa.me/${waPhone}?text=${waText}`;
+
+        returnedTgUrl = settings?.telegramUsername
+          ? `https://t.me/${settings.telegramUsername}`
+          : `https://t.me/linhtet_itservice`;
+
+        if (settings?.telegramBotToken && settings?.telegramChatId) {
+          returnedTgNotify = await directTelegramNotification(orderResult, settings);
+        }
+      }
+
+      // Persist order in local storage for Admin Panel
+      addLocalOrder(orderResult);
+
+      setCompletedOrder(orderResult);
+      setWhatsappUrl(returnedWaUrl);
+      setTelegramAdminUrl(returnedTgUrl);
+      setTelegramNotifyResult(returnedTgNotify);
+      onOrderSuccess(orderResult);
+
+      // Confetti celebration
+      try {
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      } catch {
+        // ignore
       }
     } catch (err: any) {
       setError(err.message || 'Network error occurred');

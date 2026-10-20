@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { Review, Product, Language } from '../types';
 import { translations } from '../translations';
+import { getLocalReviews, saveLocalReviews, addLocalReview } from '../lib/storeService';
 
 interface ReviewsProps {
   products: Product[];

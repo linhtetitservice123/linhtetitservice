@@ -92,6 +92,7 @@ export interface StoreSettings {
   telegramChatId: string;
   telegramChannelId?: string;
   whatsappNumber: string;
+  adminPasscode?: string;
   currency: string;
   exchangeRateUsdToMmk: number;
   autoNotifyTelegram: boolean;
