@@ -25,6 +25,7 @@ import { OrderTrackerModal } from './components/OrderTrackerModal';
 import { AdminPanel } from './components/AdminPanel';
 import { Footer } from './components/Footer';
 import { DeviceFrameWrapper } from './components/DeviceFrameWrapper';
+import { Reviews } from './components/Reviews';
 import './lib/firebase';
 
 export default function App() {
@@ -344,6 +345,13 @@ export default function App() {
           </div>
         </div>
       </main>
+
+      {/* Customer Reviews & Trust Section */}
+      <Reviews
+        products={products}
+        lang={lang}
+        onSelectProduct={(p) => setSelectedProduct(p)}
+      />
 
       {/* Footer */}
       <Footer

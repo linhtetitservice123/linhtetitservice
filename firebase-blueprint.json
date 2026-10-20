@@ -46,6 +46,23 @@
       },
       "required": ["id", "createdAt", "customerPhone", "items", "totalAmount", "status"]
     },
+    "Review": {
+      "title": "Review",
+      "description": "Customer feedback and ratings for digital products",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "productId": { "type": "string" },
+        "productTitle": { "type": "string" },
+        "customerName": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "commentMm": { "type": "string" },
+        "verifiedPurchase": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "customerName", "rating", "comment", "createdAt"]
+    },
     "Settings": {
       "title": "Settings",
       "description": "Store configuration and notification credentials",
@@ -57,6 +74,7 @@
         "telegramUsername": { "type": "string" },
         "telegramBotToken": { "type": "string" },
         "telegramChatId": { "type": "string" },
+        "telegramChannelId": { "type": "string" },
         "whatsappNumber": { "type": "string" },
         "paymentAccounts": { "type": "array" }
       }
@@ -70,6 +88,10 @@
     "/orders/{orderId}": {
       "schema": { "$ref": "#/entities/Order" },
       "description": "Customer orders with fulfillment details"
+    },
+    "/reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/Review" },
+      "description": "Customer feedback and ratings collection"
     },
     "/settings/config": {
       "schema": { "$ref": "#/entities/Settings" },

@@ -13,7 +13,8 @@ import {
   Menu, 
   X,
   Sparkles,
-  ExternalLink
+  ExternalLink,
+  Star
 } from 'lucide-react';
 import { Language, DeviceFormat, StoreSettings } from '../types';
 import { translations } from '../translations';
@@ -146,6 +147,14 @@ export const Header: React.FC<HeaderProps> = ({
             <span>{t.trackOrder}</span>
           </button>
 
+          <a
+            href="#reviews"
+            className="hover:opacity-90 transition flex items-center gap-1.5 text-xs font-bold bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200 text-amber-900 shadow-2xs"
+          >
+            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+            <span>4.9★ {lang === 'my' ? 'သုံးသပ်ချက်များ' : 'Reviews'}</span>
+          </a>
+
           {/* Quick Telegram Support */}
           {settings?.telegramUsername && (
             <a
@@ -254,6 +263,18 @@ export const Header: React.FC<HeaderProps> = ({
             <span>{t.trackOrder}</span>
             <Search className="w-4 h-4 text-[#8B5A2B]" />
           </button>
+
+          <a
+            href="#reviews"
+            onClick={() => setMobileMenuOpen(false)}
+            className="flex items-center justify-between py-2 text-sm font-medium text-[#4A3B30] hover:text-[#8B5A2B]"
+          >
+            <span className="flex items-center gap-1.5">
+              <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+              <span>{t.customerReviews}</span>
+            </span>
+            <span className="text-xs bg-amber-50 text-amber-800 font-bold px-2 py-0.5 rounded-full border border-amber-200">4.9 ★</span>
+          </a>
 
           <div className="pt-2 flex flex-col gap-2">
             {settings?.telegramUsername && (

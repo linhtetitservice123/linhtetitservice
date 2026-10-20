@@ -59,7 +59,20 @@ export const translations = {
     formatDesktop: "Desktop",
     formatTablet: "Tablet (အလယ်အလတ်)",
     formatMobile: "Phone (ဖုန်း)",
-    formatSwitcherTip: "ကြည့်ရှုမည့် စခရင်ပုံစံ ပြောင်းလဲကြည့်ပါ"
+    formatSwitcherTip: "ကြည့်ရှုမည့် စခရင်ပုံစံ ပြောင်းလဲကြည့်ပါ",
+    customerReviews: "ဝယ်ယူသူများ၏ သုံးသပ်ချက်များ (Customer Reviews)",
+    reviewsSubtitle: "Lin Htet IT Service မှ Digital Products များကို ဝယ်ယူအသုံးပြုခဲ့သူများ၏ တကယ့် အတွေ့အကြုံနှင့် သုံးသပ်ချက်များ",
+    writeReview: "Review ရေးသားမည်",
+    overallRating: "ပျမ်းမျှအဆင့်သတ်မှတ်ချက်",
+    basedOnReviews: "သုံးသပ်ချက်ပေါင်း",
+    verifiedBuyer: "အတည်ပြုပြီးသော ဝယ်ယူသူ",
+    allRatings: "အားလုံး",
+    submitReview: "Review ပေးပို့မည်",
+    yourName: "သင့်အမည်",
+    selectProduct: "ဝယ်ယူခဲ့သော ပစ္စည်း (ရှိပါက)",
+    yourRating: "သင့်အဆင့်သတ်မှတ်ချက် (Rating)",
+    yourComment: "သုံးသပ်ချက် အကြံပြုချက် ရေးသားပါ",
+    reviewSubmitted: "သုံးသပ်ချက် ပေးပို့ခြင်း အောင်မြင်ပါသည်! ကျေးဇူးတင်ပါသည်။"
   },
   en: {
     brandName: "Lin Htet IT Service",
@@ -121,6 +134,19 @@ export const translations = {
     formatDesktop: "Desktop",
     formatTablet: "Tablet",
     formatMobile: "Mobile",
-    formatSwitcherTip: "Switch preview viewport format"
+    formatSwitcherTip: "Switch preview viewport format",
+    customerReviews: "Customer Reviews & Experiences",
+    reviewsSubtitle: "Authentic feedback and verified purchase ratings from Lin Htet IT Service customers",
+    writeReview: "Write a Review",
+    overallRating: "Overall Rating",
+    basedOnReviews: "based on customer reviews",
+    verifiedBuyer: "Verified Buyer",
+    allRatings: "All Ratings",
+    submitReview: "Submit Review",
+    yourName: "Your Name",
+    selectProduct: "Purchased Product (Optional)",
+    yourRating: "Your Rating",
+    yourComment: "Write your honest review...",
+    reviewSubmitted: "Thank you! Your review has been submitted successfully."
   }
 };

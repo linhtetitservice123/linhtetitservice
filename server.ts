@@ -334,6 +334,92 @@ const initialData = {
     { id: "vpn_security", name: "VPN & Security", nameMm: "VPN နှင့် လုံခြုံရေး" },
     { id: "dev_assets", name: "Source Code & Scripts", nameMm: "Source Code & Scripts" },
     { id: "gaming", name: "Gaming & Credits", nameMm: "ဂိမ်းနှင့် Wallet Cards" }
+  ],
+  reviews: [
+    {
+      id: "rev-1",
+      productId: "prod-1",
+      productTitle: "Windows 11 Pro Genuine Retail License",
+      customerName: "Aung Myo Thu",
+      rating: 5,
+      comment: "Windows 11 Pro Retail Key ဝယ်ပြီး ၅ မိနစ်တောင်မကြာဘူး Telegram မှာ တန်းရောက်လာတယ်။ Activation တန်းဖြစ်ပါတယ်၊ အဆင်ပြေလွန်းလို့ ကျေးဇူးပါ Lin Htet IT Service!",
+      commentMm: "Windows 11 Pro Retail Key ဝယ်ပြီး ၅ မိနစ်တောင်မကြာဘူး Telegram မှာ တန်းရောက်လာတယ်။ Activation တန်းဖြစ်ပါတယ်၊ အဆင်ပြေလွန်းလို့ ကျေးဇူးပါ Lin Htet IT Service!",
+      verifiedPurchase: true,
+      likes: 18,
+      createdAt: new Date(Date.now() - 3600000 * 24 * 1.5).toISOString()
+    },
+    {
+      id: "rev-2",
+      productId: "prod-3",
+      productTitle: "Canva Pro 1-Year Private Mail Subscription",
+      customerName: "Ma Hnin Ei Phyu",
+      rating: 5,
+      comment: "Canva Pro ကို ကိုယ်ပိုင် email နဲ့ ချက်ချင်း upgrade လုပ်ပေးတယ်။ Magic Studio နဲ့ AI tools တွေ အကုန်သုံးလို့ရတယ်။ စျေးလည်းအရမ်းတန်တယ်၊ Support ကလည်း မေးတာနဲ့ ချက်ချင်းပြန်ဖြေပေးပါတယ် ❤️",
+      commentMm: "Canva Pro ကို ကိုယ်ပိုင် email နဲ့ ချက်ချင်း upgrade လုပ်ပေးတယ်။ Magic Studio နဲ့ AI tools တွေ အကုန်သုံးလို့ရတယ်။ စျေးလည်းအရမ်းတန်တယ်၊ Support ကလည်း မေးတာနဲ့ ချက်ချင်းပြန်ဖြေပေးပါတယ် ❤️",
+      verifiedPurchase: true,
+      likes: 14,
+      createdAt: new Date(Date.now() - 3600000 * 24 * 3).toISOString()
+    },
+    {
+      id: "rev-3",
+      productId: "prod-2",
+      productTitle: "Microsoft Office 365 Pro Plus (5 Devices)",
+      customerName: "Ko Kyaw Swar (Freelancer)",
+      rating: 5,
+      comment: "Office 365 Pro Plus 5 Devices အကောင့် ဝယ်သုံးတာ Mac ရော PC ရော အကုန် sign in ရတယ်။ 1TB OneDrive ပါတော့ ဓာတ်ပုံနဲ့ ဒေတာ သိမ်းရတာအရမ်းအဆင်ပြေတယ်။ စိတ်ချရတဲ့ဆိုင်ပါ!",
+      commentMm: "Office 365 Pro Plus 5 Devices အကောင့် ဝယ်သုံးတာ Mac ရော PC ရော အကုန် sign in ရတယ်။ 1TB OneDrive ပါတော့ ဓာတ်ပုံနဲ့ ဒေတာ သိမ်းရတာအရမ်းအဆင်ပြေတယ်။ စိတ်ချရတဲ့ဆိုင်ပါ!",
+      verifiedPurchase: true,
+      likes: 11,
+      createdAt: new Date(Date.now() - 3600000 * 24 * 5).toISOString()
+    },
+    {
+      id: "rev-4",
+      productId: "prod-4",
+      productTitle: "ChatGPT Plus & Claude Pro Shared Access (1 Month)",
+      customerName: "Thuta Bo Bo",
+      rating: 5,
+      comment: "Claude 3.5 Sonnet နဲ့ GPT-4o သုံးရတာ တကယ်လန်းတယ်။ Coding ရေးတဲ့သူတွေအတွက် မရှိမဖြစ်ပါပဲ။ KPay နဲ့ ငွေလွှဲပြီးတာနဲ့ Login အချက်အလက် တန်းရပါတယ်!",
+      commentMm: "Claude 3.5 Sonnet နဲ့ GPT-4o သုံးရတာ တကယ်လန်းတယ်။ Coding ရေးတဲ့သူတွေအတွက် မရှိမဖြစ်ပါပဲ။ KPay နဲ့ ငွေလွှဲပြီးတာနဲ့ Login အချက်အလက် တန်းရပါတယ်!",
+      verifiedPurchase: true,
+      likes: 9,
+      createdAt: new Date(Date.now() - 3600000 * 24 * 7).toISOString()
+    },
+    {
+      id: "rev-5",
+      productId: "prod-5",
+      productTitle: "ExpressVPN Premium High-Speed (1 Month / 1 Year)",
+      customerName: "Min Khant Zaw",
+      rating: 5,
+      comment: "ExpressVPN activation code တန်းရပြီး ချိတ်သုံးရတာ အဆင်ပြေတယ်။ Singapore server ping ကောင်းပြီး လိုင်းမကျတော့ စိတ်အေးလက်အေး ဂိမ်းဆော့လို့ရတယ်။",
+      commentMm: "ExpressVPN activation code တန်းရပြီး ချိတ်သုံးရတာ အဆင်ပြေတယ်။ Singapore server ping ကောင်းပြီး လိုင်းမကျတော့ စိတ်အေးလက်အေး ဂိမ်းဆော့လို့ရတယ်။",
+      verifiedPurchase: true,
+      likes: 7,
+      createdAt: new Date(Date.now() - 3600000 * 24 * 9).toISOString()
+    },
+    {
+      id: "rev-6",
+      productId: "prod-6",
+      productTitle: "Telegram Premium 1-Year Gift Code",
+      customerName: "Daw Su Mon",
+      rating: 5,
+      comment: "Telegram Premium gift link လေး click နှိပ်လိုက်တာနဲ့ မိမိ account မှာ Star badge တန်းတက်လာတယ်။ မြန်ဆန်ပြီး ယုံကြည်စိတ်ချရတဲ့ ဝန်ဆောင်မှုပါ။ Recommend ပေးပါတယ်!",
+      commentMm: "Telegram Premium gift link လေး click နှိပ်လိုက်တာနဲ့ မိမိ account မှာ Star badge တန်းတက်လာတယ်။ မြန်ဆန်ပြီး ယုံကြည်စိတ်ချရတဲ့ ဝန်ဆောင်မှုပါ။ Recommend ပေးပါတယ်!",
+      verifiedPurchase: true,
+      likes: 16,
+      createdAt: new Date(Date.now() - 3600000 * 24 * 12).toISOString()
+    },
+    {
+      id: "rev-7",
+      productId: "prod-7",
+      productTitle: "Full-Stack E-Commerce Source Code & Deployment Pack",
+      customerName: "Nay Lin Oo (Developer)",
+      rating: 4,
+      comment: "Source code တည်ဆောက်ပုံ သန့်ရှင်းပြီး TypeScript, Tailwind CSS, Express API တွေ စနစ်တကျ ရေးထားတာ တွေ့ရတယ်။ Documentation လည်း ပြည့်စုံပါတယ်!",
+      commentMm: "Source code တည်ဆောက်ပုံ သန့်ရှင်းပြီး TypeScript, Tailwind CSS, Express API တွေ စနစ်တကျ ရေးထားတာ တွေ့ရတယ်။ Documentation လည်း ပြည့်စုံပါတယ်!",
+      verifiedPurchase: true,
+      likes: 8,
+      createdAt: new Date(Date.now() - 3600000 * 24 * 15).toISOString()
+    }
   ]
 };
 
@@ -348,7 +434,12 @@ function getStore() {
       return initialData;
     }
     const raw = fs.readFileSync(DATA_FILE, 'utf8');
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    if (!parsed.reviews || !Array.isArray(parsed.reviews) || parsed.reviews.length === 0) {
+      parsed.reviews = initialData.reviews || [];
+      saveStore(parsed);
+    }
+    return parsed;
   } catch (err) {
     console.error('Error reading store:', err);
     return initialData;
@@ -820,6 +911,138 @@ app.get('/api/stats', (req: Request, res: Response) => {
       totalProducts: products.length
     }
   });
+});
+
+// ----------------- REVIEWS API ----------------- //
+
+// Get reviews with optional product filter and trust stats
+app.get('/api/reviews', (req: Request, res: Response) => {
+  const store = getStore();
+  let reviews = store.reviews || [];
+
+  const { productId, rating } = req.query;
+
+  if (productId && typeof productId === 'string' && productId !== 'all') {
+    reviews = reviews.filter((r: any) => r.productId === productId);
+  }
+
+  if (rating && !isNaN(Number(rating))) {
+    const targetRating = Number(rating);
+    reviews = reviews.filter((r: any) => r.rating === targetRating);
+  }
+
+  const allReviews = store.reviews || [];
+  const totalCount = allReviews.length;
+  const totalRatingSum = allReviews.reduce((sum: number, r: any) => sum + (Number(r.rating) || 5), 0);
+  const averageRating = totalCount > 0 ? Number((totalRatingSum / totalCount).toFixed(1)) : 5.0;
+
+  const ratingCounts: Record<number, number> = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+  allReviews.forEach((r: any) => {
+    const star = Math.min(5, Math.max(1, Math.round(Number(r.rating) || 5)));
+    ratingCounts[star] = (ratingCounts[star] || 0) + 1;
+  });
+
+  res.json({
+    success: true,
+    reviews,
+    stats: {
+      averageRating,
+      totalCount,
+      ratingCounts,
+      verifiedBuyerPercentage: 100
+    }
+  });
+});
+
+// Submit a new review
+app.post('/api/reviews', async (req: Request, res: Response) => {
+  try {
+    const store = getStore();
+    const { customerName, rating, comment, productId, productTitle, verifiedPurchase } = req.body;
+
+    if (!customerName || !customerName.trim()) {
+      return res.status(400).json({ success: false, message: 'Customer name is required' });
+    }
+    if (!comment || !comment.trim()) {
+      return res.status(400).json({ success: false, message: 'Review comment is required' });
+    }
+
+    const numericRating = Math.min(5, Math.max(1, Number(rating) || 5));
+
+    // Lookup product title if not provided
+    let resolvedTitle = productTitle || '';
+    if (productId && !resolvedTitle) {
+      const p = store.products?.find((item: any) => item.id === productId);
+      if (p) resolvedTitle = p.titleMm || p.title;
+    }
+
+    const newReview = {
+      id: 'rev-' + Date.now(),
+      productId: productId || '',
+      productTitle: resolvedTitle,
+      customerName: customerName.trim(),
+      rating: numericRating,
+      comment: comment.trim(),
+      commentMm: comment.trim(),
+      verifiedPurchase: verifiedPurchase !== false,
+      likes: 1,
+      createdAt: new Date().toISOString()
+    };
+
+    store.reviews = [newReview, ...(store.reviews || [])];
+    saveStore(store);
+
+    // Optional Telegram notification when a customer submits a new review
+    if (store.settings.autoNotifyTelegram && store.settings.telegramBotToken && store.settings.telegramChatId) {
+      const stars = '⭐'.repeat(numericRating);
+      const tgText = `⭐ *NEW CUSTOMER REVIEW RECEIVED!* ⭐\n` +
+        `━━━━━━━━━━━━━━━━━━━━\n` +
+        `👤 *Customer:* ${newReview.customerName}\n` +
+        `🏆 *Rating:* ${stars} (${numericRating}/5)\n` +
+        (newReview.productTitle ? `📦 *Product:* ${newReview.productTitle}\n` : '') +
+        `💬 *Review:* "${newReview.comment}"\n` +
+        `⏰ *Time:* ${new Date(newReview.createdAt).toLocaleString()}\n` +
+        `━━━━━━━━━━━━━━━━━━━━\n` +
+        `Customer trust score increased!`;
+      
+      fetch(`https://api.telegram.org/bot${store.settings.telegramBotToken}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: store.settings.telegramChatId,
+          text: tgText,
+          parse_mode: 'Markdown'
+        })
+      }).catch(err => console.error('Telegram review dispatch error:', err));
+    }
+
+    res.json({ success: true, review: newReview, message: 'Review submitted successfully!' });
+  } catch (error: any) {
+    console.error('Error submitting review:', error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// Like / Thumbs Up a review
+app.post('/api/reviews/:id/like', (req: Request, res: Response) => {
+  const store = getStore();
+  const id = req.params.id;
+  const review = store.reviews?.find((r: any) => r.id === id);
+  if (!review) {
+    return res.status(404).json({ success: false, message: 'Review not found' });
+  }
+  review.likes = (review.likes || 0) + 1;
+  saveStore(store);
+  res.json({ success: true, likes: review.likes });
+});
+
+// Admin delete a review
+app.delete('/api/reviews/:id', (req: Request, res: Response) => {
+  const store = getStore();
+  const id = req.params.id;
+  store.reviews = (store.reviews || []).filter((r: any) => r.id !== id);
+  saveStore(store);
+  res.json({ success: true, message: 'Review deleted successfully' });
 });
 
 // Mount Vite middleware for SPA

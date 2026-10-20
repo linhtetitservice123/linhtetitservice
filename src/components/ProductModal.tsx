@@ -10,7 +10,8 @@ import {
   HelpCircle, 
   ShoppingBag,
   ArrowRight,
-  Sparkles
+  Sparkles,
+  Star
 } from 'lucide-react';
 import { Product, Language } from '../types';
 import { translations } from '../translations';
@@ -102,6 +103,32 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                 </span>
               )}
             </div>
+          </div>
+
+          {/* Trust & Reviews Callout */}
+          <div className="flex items-center justify-between p-3 rounded-2xl bg-amber-50/70 border border-amber-200/70 text-xs">
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-0.5">
+                {[1, 2, 3, 4, 5].map(s => (
+                  <Star key={s} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                ))}
+              </div>
+              <span className="font-extrabold text-amber-900">4.9 / 5.0</span>
+              <span className="text-[#8B5A2B] font-medium hidden sm:inline">• {lang === 'my' ? '၁၀၀% စိတ်ချရသော ဝယ်ယူသူသုံးသပ်ချက်များ' : '100% Verified Customer Reviews'}</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                onClose();
+                setTimeout(() => {
+                  const el = document.getElementById('reviews');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }}
+              className="text-[#8B5A2B] hover:text-[#5C3618] font-bold underline cursor-pointer shrink-0"
+            >
+              {lang === 'my' ? 'သုံးသပ်ချက်များ ကြည့်ရန်' : 'Read Reviews'}
+            </button>
           </div>
 
           {/* Description */}

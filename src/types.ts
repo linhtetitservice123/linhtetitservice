@@ -58,6 +58,20 @@ export interface Order {
   adminNote?: string;
 }
 
+export interface Review {
+  id: string;
+  productId?: string;
+  productTitle?: string;
+  customerName: string;
+  rating: number;
+  comment: string;
+  commentMm?: string;
+  verifiedPurchase: boolean;
+  createdAt: string;
+  likes?: number;
+  adminReply?: string;
+}
+
 export interface PaymentAccount {
   id: string;
   name: string;
